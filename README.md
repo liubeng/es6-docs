@@ -1,4 +1,4 @@
-# dumi app
+# ES6 docs
 
 ## Getting Started
 

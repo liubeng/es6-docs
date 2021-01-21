@@ -10,6 +10,12 @@ export default defineConfig({
   // ],
   history: {
     type: 'hash'
-  }
+  },
+  favicon: './logo.png',
+  publicPath: '/doc-sit/',
+  navs: [
+    null,
+    { title: 'GitHub', path: 'https://github.com/liubeng' }
+  ]
   // more config: https://d.umijs.org/config
 });

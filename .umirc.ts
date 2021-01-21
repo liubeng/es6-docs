@@ -12,7 +12,7 @@ export default defineConfig({
     type: 'hash'
   },
   favicon: './logo.png',
-  publicPath: '/doc-sit/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/doc-sit/' : '/',
   navs: [
     null,
     { title: 'GitHub', path: 'https://github.com/liubeng' }

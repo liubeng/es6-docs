@@ -44,7 +44,8 @@ JS加载包含预编译和执行两个阶段
         delete window.a;
         delete window.b;
         console.log(a);
-        console.log(b); // b is not defined
+        console.log(b); // b is not defined  
+        
 *<code>Object.getOwnPropertyDescriptor() </code>方法返回指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）*  
 *<code>configurable</code>: 当且仅当该属性的 configurable 键值为 true 时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。默认值为 false。*  
 

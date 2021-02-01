@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  title: '重学ES6',
+  title: 'ES6知识点梳理',
   mode: 'doc',
   // routes: [
   //   { path: '/', component: './src/index.md' },
@@ -11,7 +11,6 @@ export default defineConfig({
   history: {
     type: 'hash'
   },
-  favicon: './logo.png',
   publicPath: process.env.NODE_ENV === 'production' ? '/doc-sit/' : '/',
   navs: [
     null,

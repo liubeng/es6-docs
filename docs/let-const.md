@@ -2,12 +2,22 @@
 order: 1
 ---
 ## var,let和const
-
 ### ECS(Execution Context Stack)执行环境栈
 
 实质：栈内存(从内存当中分配出来的一块内存),遵守先进后出原则。  
 作用：执行环境栈用来存储执行代码期间创建的所有(EC)执行上下文。并确保程序能够按照正确的顺序被执行。  
 创建时间：在首次运行js代码时创建
+
+### 作用域（Scope）
++ 作用域是一套规则，用于确定在何处以及如何查找变量（标识符）。
++ 作用域是可访问变量的集合。
++ 值和表达式在其中 "可见" 或可被访问到的上下文。
++ 分为 全局作用域/局部作用域（函数作用域与块级作用域）
+
+### 上下文（Context）
++ 上下文是一段程序运行所需要的最小数据集合
+作用域是当前上下文中，按照具体规则能够访问到的标识符（变量）的范围。有时候上下文、环境、作用域是同义词；上下文指代的是整体环境，作用域关注的是标识符（变量）的可访问性（可见性）。上下文确定了，根据具体编程语言的作用域规则，作用域也就确定了。  
+作用域只是一个“地盘”，一个抽象的概念，其中没有变量。要通过作用域对应的执行上下文环境来获取变量的值，如果要查找一个作用域下某个变量的值，就需要找到这个作用域对应的执行上下文环境，再在其中寻找变量的值，这就是上下文与作用域的关系。
 
 ### EC(Execution Context)执行上下文(词法作用域)
 实质： 代码执行所在的执行上下文，或者代码执行所处的作用域，实质上是执行环境栈中的一块栈内存。  
@@ -25,16 +35,17 @@ order: 1
     + 只要当前上下文中的某些内容，被当前上下文以外的东西占用，那么当前上下文是不能被释放的（上下文当中存储的变量等信息也保存下来了） 【闭包的保存机制】
 
     ![Image text](https://user-gold-cdn.xitu.io/2019/3/17/1698ac2c8ca10784?imageslim)
-
-        function foo(b) {
-            var a = 5;
-            return a * b + 10;
-        }
-        function bar(x) {
-            var y = 3;
-            return foo(x*y);
-        }
-        console.log(bar(6));
+```javascript
+function foo(b) {
+    var a = 5;
+    return a * b + 10;
+}
+function bar(x) {
+    var y = 3;
+    return foo(x*y);
+}
+console.log(bar(6));
+```
 ### 闭包
 + 闭包是一种机制
 + 闭包的作用：保护/保存  
@@ -44,7 +55,7 @@ order: 1
 3. 大量应用闭包一定会导致内存消耗，但是闭包的保护和保存作用，在真实开发中我们还是需要使用，所以要合理使用闭包
       
 ### VO(Variable Object)变量对象
-+ 作用： 是一个用来保存 【当前上下文】 中 【所有变量】 的对象（存储空间），这个对象（存储空间）【被创建在当前上下文中。】
++ 作用： 是一个用来保存 【当前上下文】 中 【所有变量】 的对象（存储空间），这个对象（存储空间）被创建在当前上下文中。
 + 在不同的上下文中，有不同的表现和叫法，但都是变量对象
 + #### VO(G)全局变量对象：
     1. 【对于VAR创建的变量来说】 在【全局执行上下文EC(G)中】，全局变量对象 VO(G) 的具体表现就是【全局对象(GO)】，因为【所有VAR创建的全局变量】其实都会映射给【全局对象(GO)】一份，作为其属性，【而变量对象 VO 的作用是要保存当前上下文中的所有变量，所以此时的变量对象 VO 实际上是指向的全局对象】。【所以会映射给window一份】，则全局对象(GO)就是 window，
@@ -72,18 +83,18 @@ JS加载包含预编译和执行两个阶段
 + function： 声明、初始化、赋值一开始就全部完成，所以函数的变量提升优先级更高（函数声明会被提升，而函数表达式却不会被提升）
 隐式声明：
 + 当赋值给未声明的变量, 则执行赋值后, 该变量会被隐式地创建为全局变量（它将成为全局对象的属性）。
-
-        var a = 123;
-        b = 456;
-        var attrA = Object.getOwnPropertyDescriptor(window,'a');
-        var attrB = Object.getOwnPropertyDescriptor(window,'b');
-        console.log(attrA);//{value: 123, writable: true, enumerable: true, configurable: false}
-        console.log(attrB);//{value: 456, writable: true, enumerable: true, configurable: true}
-        delete window.a;
-        delete window.b;
-        console.log(a);
-        console.log(b); // b is not defined  
-        
+```javascript
+var a = 123;
+b = 456;
+var attrA = Object.getOwnPropertyDescriptor(window,'a');
+var attrB = Object.getOwnPropertyDescriptor(window,'b');
+console.log(attrA);//{value: 123, writable: true, enumerable: true, configurable: false}
+console.log(attrB);//{value: 456, writable: true, enumerable: true, configurable: true}
+delete window.a;
+delete window.b;
+console.log(a);
+console.log(b); // b is not defined  
+```    
 *<code>Object.getOwnPropertyDescriptor() </code>方法返回指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）*  
 *<code>configurable</code>: 当且仅当该属性的 configurable 键值为 true 时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。默认值为 false。*  
 
@@ -96,7 +107,7 @@ JS加载包含预编译和执行两个阶段
 + LHS（Left-hand Side）：查找的目的是对变量进行赋值，就会使用LHS查询（试图找到变量的容器本身，从而可以对其赋值）
 + RHS（Right-hand Side）：查找的目的是获取变量的值，就会使用RHS查询
 + LHS 和 RHS 查询都会在当前执行作用域中开始，如果有需要（也就是说它们没有找到所需的标识符），就会向上级作用域继续查找目标标识符，这样每次上升一级作用域，最后到达全局作用域，无论找到或没找到都将停止。
-+ 不成功的 RHS 引用会导致抛出 ReferenceError 异常。不成功的 LHS 引用会导致自动隐式地创建一个全局变量（非严格模式下），该变量使用 LHS 引用的目标作为标识符，或者抛出 ReferenceError 异常（严格模式下）
++ 不成功的 RHS 引用会导致抛出 ReferenceError 异常。不成功的 LHS 引用会导致自动隐式地创建一个全局变量（非严格模式下），该变量使用 LHS 引用的目标作为标识符，或者抛出 ReferenceError（引用错误） 异常（严格模式下）
 
 ### 内存分配：
 JS 引擎中的内存分类：
@@ -106,8 +117,7 @@ JS 引擎中的内存分类：
 + var：会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针
 + let：是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错
 + const：也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
-
-        debugger
+```javascript
         var a=1;
         const b=2;
         let c=3;
@@ -125,7 +135,7 @@ JS 引擎中的内存分类：
         aFun()
         console.log(aaaa)
         // console.log(aaa)
-
+```    
 ### 小结
 - 使用var声明的变量，其作用域为该语句所在的**函数**内，且**存在**变量提升现象；
 - 使用let声明的变量，其作用域为该语句所在的**代码块**内，**不存在**变量提升；（代码块：{}）

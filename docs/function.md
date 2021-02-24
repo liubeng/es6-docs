@@ -1,7 +1,7 @@
 ---
 order: 4
+title: 函数
 ---
-## 函数
 
 ### 函数参数的默认值
 ```javascript

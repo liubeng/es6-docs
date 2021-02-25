@@ -253,7 +253,7 @@ jsonToMap('{"yes": true, "no": false}')
 - <code>WeakMap</code>的键名所指向的对象，不计入垃圾回收机制。类似于<code>WeakSet</code>。
 
 基本上，如果你想往对象上添加数据又不想干扰垃圾回收机制，就可以使用<code>WeakMap</code>。
-注意，<code>WeakMap</code>弱引用的只是键名，而不是键值。键值依然是正常引用。
+注意，<code>WeakMap</code>弱引用的只是键名，而不是键值。键值依然是正常引用。  
 WeakMap 与 Map 在API上的区别主要是两个：
-- <code>WeakMap</code>没有遍历操作（<code>keys()</code>、<code>values()</code>、<code>entries()</code>方法），也没有 <code>size</code> 属性。
+- <code>WeakMap</code>没有遍历操作（<code>keys()</code>、<code>values()</code>、<code>entries()</code>方法），也没有 <code>size</code> 属性。  
 - <code>WeakMap</code>无法清空，即没有 <code>clear()</code> 方法。只有四个方法可用：<code>get()</code>、<code>set()</code>、<code>has()</code>、<code>delete()</code>。
